@@ -1,0 +1,20 @@
+Chat Prompting with Parsing
+----------------------------
+This approach first generates a free-text response (which might be more flexible) and then extracts/validates the DSL from the response.
+
+💡 How does this work?
+----------------------
+- You provide an NL-to-DSL prompt to the LLM using chat-style prompting.
+- The model generates the DSL as part of a natural conversation.
+- A separate parsing step extracts or cleans up the DSL output.
+
+✅ Advantages:
+--------------
+- Easier to implement—just a well-crafted prompt is needed.
+- More flexible, as the model can explain or refine its response.
+
+⚠️ Disadvantages:
+-----------------
+- May introduce inconsistencies, requiring additional parsing to ensure correctness.
+- The DSL might be embedded in a larger text response (e.g., "Here is your DSL: ..."), requiring extraction.
+- If parsing fails, the output may not be usable.

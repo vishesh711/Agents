@@ -1,0 +1,36 @@
+k-shot learning in AI systems:
+------------------------------
+K-shot learning refers to the number of examples (k) that an AI model is given to learn from when performing a new task. The "k" represents the number of training examples per class or category.
+Here are the main types:
+
+Zero-shot learning (k=0):
+-------------------------
+- The model performs a task without any examples
+- For instance, if you ask me to classify animals I've never seen examples of before, but I can use my general knowledge about animals
+- Example: Identifying a zebra as an animal even if I was never explicitly trained on zebra images, by understanding it has animal-like characteristics
+
+One-shot learning (k=1):
+-------------------------
+- The model learns from just one example per class
+- Like learning to recognize someone's face from seeing just one photo of them
+- Particularly useful when training data is scarce or expensive to obtain
+
+Few-shot learning (small k, typically 2-5):
+--------------------------------------------
+- Learning from a small number of examples per class
+- Bridges the gap between one-shot and traditional machine learning
+- More robust than one-shot but still efficient with limited data
+
+
+Traditional machine learning typically requires hundreds or thousands of examples (large k), which can be:
+----------------------------------------------------------------------------------------------------------
+- Time-consuming to collect
+- Expensive to label
+- Not always available for rare cases
+
+✅ The benefits of k-shot learning include:
+-------------------------------------------
+- More efficient use of training data
+- Better handling of rare cases or new situations
+- More similar to human learning (we often learn from very few examples)
+- Reduced data collection and labeling costs

@@ -1,0 +1,29 @@
+Structured Decoding with Instructor
+-----------------------------------
+This approach ensures that the LLM generates well-formed, structured outputs directly, without needing post-processing or additional parsing.
+
+- Instructor is a framework that guides the LLM to follow a predefined schema.
+- The LLM directly produces DSL in the expected format.
+- No need for post-processing since the output is already structured correctly.
+
+How does this work?
+-------------------
+- The LLM is trained or prompted in a way that it strictly follows a DSL format.
+- A structured decoding method (like constrained generation) ensures that every token produced is valid within the expected syntax.
+- The model is not generating free text but rather constrained outputs that conform to the DSL.
+
+✅ Advantages:
+--------------
+- Ensures correctness of the DSL output.
+- Reduces the risk of syntax errors.
+- Works well when output needs to match a strict schema.
+
+⚠️ Disadvantages:
+-----------------
+- Can be harder to set up than free-text generation.
+- May limit flexibility in handling unexpected cases.
+
+
+
+
+

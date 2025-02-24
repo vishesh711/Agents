@@ -1,0 +1,12 @@
+This is a repository for the concepts that i am learning in the field of AI and Machine Learning and my Resume.
+
+This would mostly contain the concepts that i am Learning while getting my hands on the Intenship at A79.AI and my Resume.
+
+I'll be adding the concepts that i am learning in the form of .py files on the daily basis.
+
+
+Date        |  Concepts             |  File Name
+------------------------------------------------------------------------------------------------
+24-02-2025  |  K-shot Learning      |  K_shot_Learning
+24-02-2025  |  Structured Decoding  |  Structured_Decoding
+
