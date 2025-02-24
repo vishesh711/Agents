@@ -98,11 +98,19 @@ Contributions are welcome! Feel free to:
 - Submit pull requests for improvements
 - Share ideas for new concepts to cover
 
-## 📝 License
+## 📝 License & Author
 
-```
-@Vishesh711
-```
+<div align="center">
+  <a href="https://github.com/Vishesh711">
+    <img src="https://github.com/Vishesh711.png" width="100px" alt="Vishesh711" style="border-radius:50%"/>
+    <br/>
+    <sub><b>@Vishesh711</b></sub>
+  </a>
+</div>
+
+<div align="center">
+  Copyright © 2025 <a href="https://github.com/Vishesh711">Vishesh711</a>. All rights reserved.
+</div>
 
 ---
 *This is a learning repository - concepts and implementations are continuously being updated and improved.*
