@@ -22,8 +22,3 @@ How does this work?
 -----------------
 - Can be harder to set up than free-text generation.
 - May limit flexibility in handling unexpected cases.
-
-
-
-
-

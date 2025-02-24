@@ -37,6 +37,21 @@ Two main approaches are implemented for converting natural language to Domain Sp
 - Pattern-based validation
 - Flexible response handling
 
+### 3. Performance Benchmarking & Visualization
+Comprehensive benchmarking system to compare both approaches:
+
+#### Metrics Tracked
+- Accuracy across different k-shot scenarios
+- Response time performance
+- Confidence scores
+- Error rates and types
+
+#### Visualization Suite
+- **Accuracy Comparison:** Line plots showing accuracy vs k-shot learning
+- **Response Time Analysis:** Box plots of processing speed distribution
+- **Confidence Metrics:** Bar charts comparing confidence scores
+- **Performance Trade-offs:** Scatter plots of accuracy vs response time
+
 ## 📅 Implementation Timeline
 
 | Date       | Concept             | Implementation Details |
@@ -56,7 +71,7 @@ Two main approaches are implemented for converting natural language to Domain Sp
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/Concepts-of-Data-Science.git
+git clone https://github.com/Vishesh711/Concepts-of-Data-Science.git
 ```
 
 2. Install dependencies:
@@ -76,10 +91,14 @@ pip install scikit-learn numpy
 │   ├── simple_K_shot_Learning_in_a_agent.py
 │   └── concept_idea.txt
 ├── NL to DSL/
-│   ├── Structured_Decoding_Agent.py
-│   ├── Chat_Prompting_Agent.py
-│   ├── Benchmarking_script.py
-│   └── Documentation files
+│   ├── Agents/
+│   │   ├── Structured_Decoding_Agent.py
+│   │   └── Chat_Prompting_Agent.py
+│   ├── Benchmarking/
+│   │   ├── Benchmarking_script.py
+│   ├── Documentation/
+│   │   ├── agent_comparison.txt
+│   │   └── implementation_details.txt
 └── README.md
 ```
 
@@ -112,3 +131,12 @@ Contributions are welcome! Feel free to:
 
 ---
 *This is a learning repository - concepts and implementations are continuously being updated and improved.*
+
+## 📊 Sample Results
+
+![Benchmark Results](./NL%20to%20DSL/benchmark_results.png)
+
+The benchmarking results show:
+- Structured Decoding achieves higher accuracy with fewer examples
+- Chat Prompting offers more flexible response handling
+- Trade-offs between speed and accuracy across different k values
