@@ -1,0 +1,136 @@
+1. Building the Two AI Agents
+--------------------------------
+You’ll need to implement two versions of your NL to DSL model:
+
+Agent 1: Structured Decoding with Instructor
+------------------------------------------
+- Uses constrained generation to directly produce valid DSL.
+- No extra parsing needed since the output is structured.
+
+Agent 2: Chat Prompting with Parsing
+----------------------------------
+- Uses natural language prompting to generate the DSL in free text.
+- Requires a separate parsing step to extract and validate the DSL.
+
+
+2. Benchmarking and Performance Comparison
+-------------------------------------------
+To compare the agents, you need:
+
+- A set of test cases (NL → DSL pairs).
+- A performance metric (accuracy, error rate, time to generate, etc.).
+- Different K-shot variations (zero-shot, few-shot, and many-shot examples).
+- A way to plot performance trends as K increases.
+
+
+A SIMPLE AND BETTER EXPLANATION:
+--------------------------------
+
+1. Two Types of AI Agents Being Compared:
+----------------------------------------
+
+A) Structured Decoding Agent:
+--------------------------------
+- Think of this like a very strict teacher who:
+  * Only accepts answers in a specific format
+  * Won't let you write anything outside that format
+  * Makes sure everything follows exact rules
+
+- Example:
+  ```
+  Input: "Add 5 and 3"
+  Output: add(5, 3)  # Must be in this exact format
+  ```
+
+B) Chat Prompting Agent:
+--------------------------------
+- More like a flexible teacher who:
+  * Lets you explain your answer in natural language
+  * Then extracts the important parts later
+  * Allows for more conversational responses
+
+- Example:
+  ```
+  Input: "Add 5 and 3"
+  Output: "I'll help you add those numbers. Here's the operation: add(5, 3)"
+  # Later parses to get just: add(5, 3)
+  ```
+
+2. K-shot Learning in Both Agents:
+----------------------------------
+Let's say we're teaching both agents to convert English to math operations:
+
+Zero-shot (k=0):
+----------------
+```
+Input: "Add 5 and 3"
+# No examples given, just try to figure it out
+```
+
+One-shot (k=1):
+----------------
+```
+Example: 
+- "Add 2 and 4" → add(2, 4)
+
+Input: "Add 5 and 3"
+# Use that one example to figure it out
+```
+
+Few-shot (k=3):
+----------------
+```
+Examples:
+- "Add 2 and 4" → add(2, 4)
+- "Subtract 7 from 10" → subtract(10, 7)
+- "Multiply 3 and 6" → multiply(3, 6)
+
+Input: "Add 5 and 3"
+# Use these three examples to figure it out
+```
+
+3. Benchmarking Plan:
+----------------------
+- Test both agents with:
+  * Different numbers of examples (k = 0, 1, 3, 5, 10)
+  * Same test cases for both agents
+  * Measure:
+    - Accuracy (how often they get it right)
+    - Time taken
+    - Error rates
+
+4. Performance Plotting:
+------------------------
+
+```
+Accuracy
+   ^
+90%|        .------- Structured
+   |      .-'
+70%|    .-'   .------ Chat Prompting
+   |  .-'   .-'
+50%|.-'   .-'
+   +----------------->
+   0  1  3  5  10   k (number of examples)
+```
+
+This graph would show:
+----------------------
+- How accuracy improves with more examples
+- Which agent performs better
+- Where adding more examples stops helping
+
+The key differences to note:
+----------------------------
+
+1. Structured Agent:
+   - More accurate but less flexible
+   - Harder to set up
+   - Better for strict requirements
+
+2. Chat Agent:
+   - More flexible but needs cleanup
+   - Easier to implement
+   - Better for handling unexpected inputs
+
+
