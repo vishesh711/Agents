@@ -106,7 +106,7 @@ Contributions are welcome! Feel free to:
   </a>
   <div>
     <h3><a href="https://github.com/Vishesh711">@Vishesh711</a></h3>
-    <p>Copyright © 2025 Vishesh711. All rights reserved.</p>
+    <p>Copyright © 2025. All rights reserved.</p>
   </div>
 </div>
 
