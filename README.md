@@ -100,16 +100,14 @@ Contributions are welcome! Feel free to:
 
 ## 📝 License & Author
 
-<div align="center">
+<div align="left" style="display: flex; align-items: center; gap: 20px;">
   <a href="https://github.com/Vishesh711">
     <img src="https://github.com/Vishesh711.png" width="100px" alt="Vishesh711" style="border-radius:50%"/>
-    <br/>
-    <sub><b>@Vishesh711</b></sub>
   </a>
-</div>
-
-<div align="center">
-  Copyright © 2025 <a href="https://github.com/Vishesh711">Vishesh711</a>. All rights reserved.
+  <div>
+    <h3><a href="https://github.com/Vishesh711">@Vishesh711</a></h3>
+    <p>Copyright © 2025 Vishesh711. All rights reserved.</p>
+  </div>
 </div>
 
 ---
