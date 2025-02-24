@@ -3,102 +3,14 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import re
+import sys
+import os
+import time
 
-class ChatPromptingAgent:
-    def __init__(self, k: int = 5):
-        """
-        Initialize the chat prompting agent
-        Args:
-            k (int): Number of examples per operation type
-        """
-        self.k = k
-        self.examples = {}
-        self.vectorizer = TfidfVectorizer(
-            ngram_range=(1, 2),
-            stop_words='english',
-            min_df=1,
-            max_df=0.9
-        )
-        
-        # Define patterns for extracting DSL from chat responses
-        self.dsl_patterns = {
-            'add': r'add\(\d+,\s*\d+\)',
-            'subtract': r'subtract\(\d+,\s*\d+\)',
-            'multiply': r'multiply\(\d+,\s*\d+\)',
-            'divide': r'divide\(\d+,\s*\d+\)'
-        }
-    
-    def add_examples(self, operation: str, examples: List[Tuple[str, str, str]]):
-        """
-        Add examples for an operation type
-        Args:
-            operation (str): Operation name (add, subtract, etc.)
-            examples (List[Tuple]): List of (natural language, chat response, DSL) triples
-        """
-        if len(examples) != self.k:
-            raise ValueError(f"Expected {self.k} examples, got {len(examples)}")
-        if operation not in self.dsl_patterns:
-            raise ValueError(f"Invalid operation: {operation}")
-        self.examples[operation] = examples
-    
-    def extract_dsl(self, operation: str, chat_response: str) -> str:
-        """Extract DSL from chat response"""
-        pattern = self.dsl_patterns.get(operation)
-        match = re.search(pattern, chat_response)
-        return match.group(0) if match else ""
-    
-    def generate_chat_response(self, operation: str, numbers: List[str]) -> str:
-        """Generate a chat-style response"""
-        templates = {
-            'add': "Let me help you add those numbers. The operation would be: add({}, {})",
-            'multiply': "I'll multiply those numbers for you. Here's the operation: multiply({}, {})"
-        }
-        template = templates.get(operation, "Here's the operation: {}({}, {})")
-        return template.format(numbers[0], numbers[1])
-    
-    def predict(self, query: str) -> Tuple[str, str, str, float]:
-        """
-        Predict DSL for natural language query
-        Returns:
-            Tuple[str, str, str, float]: (operation, chat response, DSL output, confidence)
-        """
-        # Extract all natural language examples
-        all_texts = [query]
-        operations = []
-        chat_responses = []
-        dsl_examples = []
-        
-        for operation, examples in self.examples.items():
-            for nl, chat, dsl in examples:
-                all_texts.append(nl)
-                operations.append(operation)
-                chat_responses.append(chat)
-                dsl_examples.append(dsl)
-        
-        # Convert to TF-IDF vectors
-        tfidf_matrix = self.vectorizer.fit_transform(all_texts)
-        
-        # Calculate similarities
-        query_vector = tfidf_matrix[0]
-        example_vectors = tfidf_matrix[1:]
-        similarities = cosine_similarity(query_vector, example_vectors)[0]
-        
-        # Find most similar example
-        best_idx = np.argmax(similarities)
-        operation = operations[best_idx]
-        
-        # Extract numbers from query
-        numbers = re.findall(r'\d+', query)
-        if len(numbers) < 2:
-            numbers = ['0', '0']  # Default values
-            
-        # Generate chat response
-        chat_response = self.generate_chat_response(operation, numbers)
-        
-        # Extract DSL from chat response
-        dsl_output = self.extract_dsl(operation, chat_response)
-            
-        return operation, chat_response, dsl_output, similarities[best_idx]
+# Add the parent directory to sys.path to allow imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from Agents.Structured_Decoding_Agent import StructuredDecodingAgent
+from Agents.Chat_Prompting_Agent import ChatPromptingAgent
 
 def test_chat_agent():
     """Test the chat prompting agent"""
@@ -142,5 +54,112 @@ def test_chat_agent():
         print(f"DSL Output: {dsl}")
         print(f"Confidence: {confidence:.2f}")
 
+def compare_agents():
+    """Compare Structured Decoding vs Chat Prompting approaches"""
+    
+    # Initialize both agents
+    structured_agent = StructuredDecodingAgent(k=2)
+    chat_agent = ChatPromptingAgent(k=2)
+    
+    # Add same examples to both agents
+    add_examples_structured = [
+        ("add 5 and 3", "add(5, 3)"),
+        ("what is 2 plus 4", "add(2, 4)")
+    ]
+    
+    multiply_examples_structured = [
+        ("multiply 6 and 7", "multiply(6, 7)"),
+        ("what is 3 times 9", "multiply(3, 9)")
+    ]
+    
+    add_examples_chat = [
+        ("add 5 and 3", 
+         "Let me help you add those numbers. The operation would be: add(5, 3)", 
+         "add(5, 3)"),
+        ("what is 2 plus 4", 
+         "I'll help you add 2 and 4. Here's the operation: add(2, 4)", 
+         "add(2, 4)")
+    ]
+    
+    multiply_examples_chat = [
+        ("multiply 6 and 7", 
+         "I'll multiply those numbers for you. Here's the operation: multiply(6, 7)", 
+         "multiply(6, 7)"),
+        ("what is 3 times 9", 
+         "Let me multiply 3 and 9. The operation is: multiply(3, 9)", 
+         "multiply(3, 9)")
+    ]
+    
+    # Add examples to agents
+    structured_agent.add_examples("add", add_examples_structured)
+    structured_agent.add_examples("multiply", multiply_examples_structured)
+    chat_agent.add_examples("add", add_examples_chat)
+    chat_agent.add_examples("multiply", multiply_examples_chat)
+    
+    # Test queries with varying complexity
+    test_queries = [
+        "add 10 and 20",
+        "what is 15 plus 25",
+        "can you add 30 and 40",
+        "multiply 8 and 12",
+        "what is the product of 5 and 7",
+        "calculate 15 times 3"
+    ]
+    
+    # Performance metrics
+    metrics = {
+        'structured': {'correct': 0, 'confidence': [], 'time': []},
+        'chat': {'correct': 0, 'confidence': [], 'time': []}
+    }
+    
+    print("\n=== Comparing Structured Decoding vs Chat Prompting ===\n")
+    
+    for query in test_queries:
+        print(f"\nQuery: {query}")
+        print("-" * 50)
+        
+        # Test Structured Agent
+        start_time = time.time()
+        op_struct, dsl_struct, conf_struct = structured_agent.predict(query)
+        struct_time = time.time() - start_time
+        
+        # Test Chat Agent
+        start_time = time.time()
+        op_chat, chat_resp, dsl_chat, conf_chat = chat_agent.predict(query)
+        chat_time = time.time() - start_time
+        
+        # Update metrics
+        metrics['structured']['time'].append(struct_time)
+        metrics['chat']['time'].append(chat_time)
+        metrics['structured']['confidence'].append(conf_struct)
+        metrics['chat']['confidence'].append(conf_chat)
+        
+        # Check correctness (assuming same DSL format is correct)
+        if dsl_struct == dsl_chat:
+            metrics['structured']['correct'] += 1
+            metrics['chat']['correct'] += 1
+        
+        # Print results for this query
+        print("\nStructured Decoding:")
+        print(f"DSL Output: {dsl_struct}")
+        print(f"Confidence: {conf_struct:.2f}")
+        print(f"Time: {struct_time:.3f}s")
+        
+        print("\nChat Prompting:")
+        print(f"Chat Response: {chat_resp}")
+        print(f"DSL Output: {dsl_chat}")
+        print(f"Confidence: {conf_chat:.2f}")
+        print(f"Time: {chat_time:.3f}s")
+    
+    # Print summary with more detailed metrics
+    print("\n=== Performance Summary ===")
+    for agent_type in ['structured', 'chat']:
+        print(f"\n{agent_type.capitalize()} Agent:")
+        print(f"Accuracy: {metrics[agent_type]['correct']/len(test_queries)*100:.1f}%")
+        print(f"Avg Confidence: {np.mean(metrics[agent_type]['confidence']):.2f}")
+        print(f"Avg Response Time: {np.mean(metrics[agent_type]['time']):.3f}s")
+        print(f"Max Response Time: {max(metrics[agent_type]['time']):.3f}s")
+        print(f"Min Response Time: {min(metrics[agent_type]['time']):.3f}s")
+
 if __name__ == "__main__":
-    test_chat_agent()
+    compare_agents()

@@ -131,12 +131,3 @@ Contributions are welcome! Feel free to:
 
 ---
 *This is a learning repository - concepts and implementations are continuously being updated and improved.*
-
-## 📊 Sample Results
-
-![Benchmark Results](./NL%20to%20DSL/benchmark_results.png)
-
-The benchmarking results show:
-- Structured Decoding achieves higher accuracy with fewer examples
-- Chat Prompting offers more flexible response handling
-- Trade-offs between speed and accuracy across different k values
