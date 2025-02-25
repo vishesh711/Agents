@@ -1,0 +1,86 @@
+import json
+import os
+from agents import StandardLLMAgent, StructuredLLMAgent
+from benchmark import Benchmark
+
+# Enable mocking for testing
+os.environ["BENCHMARK_MOCK"] = "true"
+
+def create_test_case_file():
+    """Create a test case file for the benchmark"""
+    with open("kshot_examples.json", "r") as f:
+        data = json.load(f)
+    
+    # Extract just the test cases without examples for benchmark
+    test_cases = []
+    for test in data["test_cases"]:
+        test_cases.append({
+            "id": test["id"],
+            "query": test["query"],
+            "expected_answer": test["expected_answer"]
+        })
+    
+    with open("test_cases.json", "w") as f:
+        json.dump(test_cases, f, indent=2)
+    
+    print("Created test_cases.json for benchmark")
+
+def run_with_kshot_examples():
+    """Run agents with K-shot examples"""
+    with open("kshot_examples.json", "r") as f:
+        data = json.load(f)
+    
+    # Create agents
+    standard_agent = StandardLLMAgent(model_name="gpt-4")
+    structured_agent = StructuredLLMAgent(model_name="gpt-4")
+    
+    print("Running agents with K-shot examples...")
+    
+    for test_case in data["test_cases"]:
+        if not test_case.get("examples"):
+            continue
+            
+        query = test_case["query"]
+        examples = test_case["examples"]
+        
+        if len(examples) >= 2:
+            # Construct K-shot prompt
+            kshot_prompt = data["prompt_templates"]["k_shot_prompt"].format(
+                example_1_query=examples[0]["query"],
+                example_1_response=examples[0]["response"],
+                example_2_query=examples[1]["query"],
+                example_2_response=examples[1]["response"],
+                query=query
+            )
+            
+            print(f"\nRunning test case {test_case['id']} with K-shot examples:")
+            
+            print("\nStandard Agent Response:")
+            standard_response = standard_agent.call_llm(kshot_prompt)
+            print(standard_response)
+            
+            print("\nStructured Agent Response:")
+            structured_response = structured_agent.run(kshot_prompt)
+            print(structured_response)
+
+def main():
+    # Create test case file
+    create_test_case_file()
+    
+    # Run benchmark
+    print("Running benchmark...")
+    benchmark = Benchmark(
+        test_cases=json.load(open("test_cases.json", "r")),
+        model_name="gpt-4",
+        num_runs=2,  # Reduced for demonstration
+        output_file="benchmark_results.json"
+    )
+    
+    results = benchmark.run_benchmark()
+    benchmark.visualize_results(results)
+    
+    # Run with K-shot examples
+    run_with_kshot_examples()
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,84 @@
+{
+  "test_cases": [
+    {
+      "id": "factual_query_1",
+      "query": "What is the capital of France?",
+      "dsl": "get_capital(france)",
+      "expected_answer": "The capital of France is Paris.",
+      "examples": [
+        {
+          "query": "What is the capital of Japan?",
+          "dsl": "get_capital(japan)",
+          "response": "The capital of Japan is Tokyo."
+        },
+        {
+          "query": "What is the capital of Brazil?",
+          "dsl": "get_capital(brazil)",
+          "response": "The capital of Brazil is Brasília."
+        }
+      ]
+    },
+    {
+      "id": "math_problem_1",
+      "query": "If I have 5 apples and I buy 3 more, then give 2 to my friend, how many apples do I have left?",
+      "dsl": "subtract(add(5, 3), 2)",
+      "expected_answer": "6 apples",
+      "examples": [
+        {
+          "query": "If I have 10 cookies and I eat 4, then bake 6 more, how many cookies do I have?",
+          "dsl": "add(subtract(10, 4), 6)",
+          "response": "I'll solve this step by step:\n1. Start with 10 cookies\n2. Eat 4 cookies: 10 - 4 = 6 cookies\n3. Bake 6 more cookies: 6 + 6 = 12 cookies\nSo I have 12 cookies."
+        }
+      ]
+    },
+    {
+      "id": "classification_task",
+      "query": "Classify this email as spam or not spam: 'CONGRATULATIONS! You've won a FREE iPhone! Click here to claim your prize now!'",
+      "dsl": "classify(email, \"CONGRATULATIONS! You've won a FREE iPhone! Click here to claim your prize now!\")",
+      "expected_answer": "Spam",
+      "examples": [
+        {
+          "query": "Classify this email as spam or not spam: 'Meeting scheduled for tomorrow at 2pm in the conference room.'",
+          "dsl": "classify(email, \"Meeting scheduled for tomorrow at 2pm in the conference room.\")",
+          "response": "Classification: Not spam\nReasoning: This appears to be a legitimate meeting notification with specific details about time and location, which is typical of normal business communication."
+        }
+      ]
+    },
+    {
+      "id": "multistep_problem",
+      "query": "I'm planning a party for 12 people. Each person will drink 2 glasses of juice. Each bottle contains 8 glasses. How many bottles should I buy?",
+      "dsl": "divide(multiply(12, 2), 8)",
+      "expected_answer": "3 bottles",
+      "examples": [
+        {
+          "query": "A baker needs to make 56 cookies. Each batch makes 8 cookies. How many batches does the baker need to make?",
+          "dsl": "divide(56, 8)",
+          "response": "I'll solve this step by step:\n1. Total cookies needed = 56\n2. Each batch produces 8 cookies\n3. To find the number of batches: 56 ÷ 8 = 7\nThe baker needs to make 7 batches."
+        }
+      ]
+    },
+    {
+      "id": "summarization_task",
+      "query": "Summarize the following paragraph: 'Photosynthesis is the process by which green plants and some other organisms use sunlight to synthesize foods with the help of chlorophyll. It is a complex process that converts carbon dioxide and water into glucose and oxygen using the energy from sunlight. This process is essential for life on Earth as it produces oxygen and serves as the primary source of energy for most living organisms.'",
+      "dsl": "summarize(\"Photosynthesis is the process by which green plants...\")",
+      "expected_answer": null,
+      "examples": [
+        {
+          "query": "Summarize the following paragraph: 'Climate change refers to significant changes in global temperature, precipitation, wind patterns, and other measures of climate that occur over several decades or longer. It is caused by factors such as biotic processes, variations in solar radiation received by Earth, plate tectonics, and volcanic eruptions. Certain human activities have been identified as primary causes of ongoing climate change, often referred to as global warming.'",
+          "dsl": "summarize(\"Climate change refers to significant changes in global...\")",
+          "response": "Climate change involves long-term alterations in global temperature, precipitation, and wind patterns, caused by natural factors like solar radiation variations and volcanic activity, as well as human activities that contribute to global warming."
+        }
+      ]
+    }
+  ],
+  "dsl_operations": {
+    "get_capital": "Retrieves the capital city of a given country or region",
+    "add": "Adds two numbers together",
+    "subtract": "Subtracts the second number from the first",
+    "multiply": "Multiplies two numbers together",
+    "divide": "Divides the first number by the second",
+    "classify": "Classifies content into predefined categories",
+    "summarize": "Creates a concise summary of longer text",
+    "query": "General purpose query operation for miscellaneous requests"
+  }
+} 

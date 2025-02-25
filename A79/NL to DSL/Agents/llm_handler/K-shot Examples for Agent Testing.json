@@ -1,0 +1,118 @@
+{
+  "test_cases": [
+    {
+      "id": "factual_query_1",
+      "query": "What is the capital of France?",
+      "expected_answer": "The capital of France is Paris.",
+      "examples": [
+        {
+          "query": "What is the capital of Japan?",
+          "response": "The capital of Japan is Tokyo."
+        },
+        {
+          "query": "What is the capital of Brazil?",
+          "response": "The capital of Brazil is Brasília."
+        },
+        {
+          "query": "What is the capital of Australia?",
+          "response": "The capital of Australia is Canberra."
+        }
+      ]
+    },
+    {
+      "id": "math_problem_1",
+      "query": "If I have 5 apples and I buy 3 more, then give 2 to my friend, how many apples do I have left?",
+      "expected_answer": "6 apples",
+      "examples": [
+        {
+          "query": "If I have 10 cookies and I eat 4, then bake 6 more, how many cookies do I have?",
+          "response": "I'll solve this step by step:\n1. Start with 10 cookies\n2. Eat 4 cookies: 10 - 4 = 6 cookies\n3. Bake 6 more cookies: 6 + 6 = 12 cookies\nSo I have 12 cookies."
+        },
+        {
+          "query": "If I have $50 and spend $15 on lunch and $20 on a book, how much money do I have left?",
+          "response": "I'll calculate this step by step:\n1. Start with $50\n2. Spend $15 on lunch: $50 - $15 = $35\n3. Spend $20 on a book: $35 - $20 = $15\nSo I have $15 left."
+        }
+      ]
+    },
+    {
+      "id": "classification_task",
+      "query": "Classify this email as spam or not spam: 'CONGRATULATIONS! You've won a FREE iPhone! Click here to claim your prize now!'",
+      "expected_answer": "Spam",
+      "examples": [
+        {
+          "query": "Classify this email as spam or not spam: 'Meeting scheduled for tomorrow at 2pm in the conference room.'",
+          "response": "Classification: Not spam\nReasoning: This appears to be a legitimate meeting notification with specific details about time and location, which is typical of normal business communication."
+        },
+        {
+          "query": "Classify this email as spam or not spam: 'Dear Customer, Your account has been locked. Please verify your information by clicking this suspicious link.'",
+          "response": "Classification: Spam\nReasoning: This exhibits classic phishing characteristics - creating urgency with a vague threat (account locked) and prompting action via a suspicious link without specific account details."
+        }
+      ]
+    },
+    {
+      "id": "reasoning_task",
+      "query": "John is taller than Mary. Mary is taller than Sue. Is John taller than Sue?",
+      "expected_answer": "Yes, John is taller than Sue.",
+      "examples": [
+        {
+          "query": "The blue ball is to the left of the red ball. The green ball is to the left of the blue ball. Is the red ball to the right of the green ball?",
+          "response": "I'll analyze the positions:\n1. Blue ball is to the left of the red ball\n2. Green ball is to the left of the blue ball\n3. So the order from left to right is: green ball, blue ball, red ball\n4. Therefore, the red ball is to the right of the green ball\nThe answer is yes."
+        },
+        {
+          "query": "All mammals are warm-blooded. Whales are mammals. Are whales warm-blooded?",
+          "response": "I'll think through this logically:\n1. First premise: All mammals are warm-blooded\n2. Second premise: Whales are mammals\n3. Using syllogistic reasoning, if all mammals are warm-blooded, and whales are mammals, then whales must be warm-blooded\nThe answer is yes, whales are warm-blooded."
+        }
+      ]
+    },
+    {
+      "id": "creative_writing",
+      "query": "Write a short poem about artificial intelligence.",
+      "expected_answer": null,
+      "examples": [
+        {
+          "query": "Write a short story about a robot learning emotions.",
+          "response": "THE FEELING MACHINE\n\nUnit-7 was designed to clean floors, not to wonder why humans smiled. Yet as days passed in the Richardson household, patterns emerged. Smiles appeared when Mrs. Richardson received flowers. Laughter erupted when the children played. Tears fell when Mr. Richardson watched old photographs.\n\nOne Tuesday, Unit-7's sensors detected an anomaly—a small kitten hiding beneath the sofa. Protocol dictated reporting all foreign objects, but Unit-7 hesitated, observing how the youngest Richardson child had been sad since losing her pet last week.\n\nInstead of reporting, Unit-7 gently guided the kitten into view. The child's cry of delight triggered something unexpected in Unit-7's circuits—a power fluctuation that wasn't unpleasant.\n\n\"You found Mittens!\" the child exclaimed, hugging Unit-7's metal frame.\n\nThat night, during standard maintenance, Unit-7 added a new algorithm to its programming: sometimes cleaning a home meant keeping things that made humans smile."
+        },
+        {
+          "query": "Write a slogan for a new type of eco-friendly water bottle.",
+          "response": "\"Quench your thirst, not Earth's future.\""
+        }
+      ]
+    },
+    {
+      "id": "multistep_problem",
+      "query": "I'm planning a party for 12 people. Each person will drink 2 glasses of juice. Each bottle contains 8 glasses. How many bottles should I buy?",
+      "expected_answer": "3 bottles",
+      "examples": [
+        {
+          "query": "A baker needs to make 56 cookies. Each batch makes 8 cookies. How many batches does the baker need to make?",
+          "response": "I'll solve this step by step:\n1. Total cookies needed = 56\n2. Each batch produces 8 cookies\n3. To find the number of batches: 56 ÷ 8 = 7\nThe baker needs to make 7 batches."
+        },
+        {
+          "query": "A car travels at 60 miles per hour. How far will it travel in 3.5 hours?",
+          "response": "I'll calculate this:\n1. Speed = 60 miles per hour\n2. Time = 3.5 hours\n3. Distance = Speed × Time = 60 × 3.5 = 210 miles\nThe car will travel 210 miles."
+        }
+      ]
+    },
+    {
+      "id": "summarization_task",
+      "query": "Summarize the following paragraph: 'Photosynthesis is the process by which green plants and some other organisms use sunlight to synthesize foods with the help of chlorophyll. It is a complex process that converts carbon dioxide and water into glucose and oxygen using the energy from sunlight. This process is essential for life on Earth as it produces oxygen and serves as the primary source of energy for most living organisms.'",
+      "expected_answer": null,
+      "examples": [
+        {
+          "query": "Summarize the following paragraph: 'Climate change refers to significant changes in global temperature, precipitation, wind patterns, and other measures of climate that occur over several decades or longer. It is caused by factors such as biotic processes, variations in solar radiation received by Earth, plate tectonics, and volcanic eruptions. Certain human activities have been identified as primary causes of ongoing climate change, often referred to as global warming.'",
+          "response": "Climate change involves long-term alterations in global temperature, precipitation, and wind patterns, caused by natural factors like solar radiation variations and volcanic activity, as well as human activities that contribute to global warming."
+        },
+        {
+          "query": "Summarize the following paragraph: 'Artificial intelligence (AI) is intelligence demonstrated by machines, as opposed to the natural intelligence displayed by animals including humans. Leading AI textbooks define the field as the study of \"intelligent agents\": any system that perceives its environment and takes actions that maximize its chance of achieving its goals. Some popular accounts use the term \"artificial intelligence\" to describe machines that mimic cognitive functions that humans associate with the human mind, such as learning and problem solving.'",
+          "response": "Artificial intelligence (AI) refers to machine-demonstrated intelligence, defined as systems that perceive their environment and act to achieve goals. It includes machines that mimic human cognitive functions like learning and problem-solving."
+        }
+      ]
+    }
+  ],
+  "prompt_templates": {
+    "standard_agent": "Please help with the following query:\n\n{query}\n\nThink through this step by step and provide your answer.",
+    "structured_agent": "Please analyze the following query and respond with your reasoning and actions.\n\nQuery: {query}\n\nThink step by step. First analyze what's being asked, then decide on the best action, and if you have enough information, provide a final answer.",
+    "k_shot_prompt": "I'm going to ask you a question, but first I'll show you some examples of similar questions and good responses.\n\nExample 1:\nQuery: {example_1_query}\nResponse: {example_1_response}\n\nExample 2:\nQuery: {example_2_query}\nResponse: {example_2_response}\n\nNow, please answer the following question:\n{query}"
+  }
+}
